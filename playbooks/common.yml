@@ -1,0 +1,50 @@
+---
+- name: update web, nfs and db servers
+  hosts: webservers, nfs, db
+  become: yes
+  tasks:
+    - name: ensure wireshark is at the latest version (RHEL)
+      yum:
+        name: wireshark
+        state: latest
+      when: ansible_facts['os_family'] == "RedHat"
+
+    - name: ensure wireshark is at the latest version (Debian/Ubuntu)
+      apt:
+        name: wireshark
+        state: latest
+        update_cache: yes
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: create /opt/myapp directory
+      file:
+        path: /opt/myapp
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: set timezone to UTC
+      timezone:
+        name: Etc/UTC
+
+    - name: run sample shell script if exists
+      shell: /opt/myapp/sample-script.sh
+      args:
+        creates: /opt/myapp/.script_ran
+      ignore_errors: yes
+
+- name: update LB server
+  hosts: lb
+  become: yes
+  tasks:
+    - name: Update apt repo
+      apt:
+        update_cache: yes
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: ensure wireshark is at the latest version
+      apt:
+        name: wireshark
+        state: latest
+      when: ansible_facts['os_family'] == "Debian"
