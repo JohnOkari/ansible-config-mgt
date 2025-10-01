@@ -27,8 +27,10 @@ ansible-config-mgt/
 # ansible-config-mgt
 
 
--test 1
--test 2
--test 3
+- test 1
+- test 2
+- test 3
+- test 4
+
 
 
