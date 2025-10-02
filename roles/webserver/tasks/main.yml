@@ -1,0 +1,38 @@
+---
+- name: install httpd
+  become: true
+  ansible.builtin.yum:
+    name: "httpd"
+    state: present
+
+- name: install git
+  become: true
+  ansible.builtin.yum:
+    name: "git"
+    state: present
+
+- name: clone tooling repo
+  become: true
+  ansible.builtin.git:
+    repo: "{{ tooling_repo_url }}"
+    dest: "{{ doc_root }}"
+    force: yes
+
+- name: copy html content to one level up (if tooling uses nested html folder)
+  become: true
+  command: bash -lc "cp -r {{ doc_root }}/html/ /var/www/ || true"
+  args:
+    warn: false
+
+- name: start and enable httpd
+  become: true
+  ansible.builtin.service:
+    name: httpd
+    state: started
+    enabled: yes
+
+- name: remove nested html directory if exists
+  become: true
+  ansible.builtin.file:
+    path: "{{ doc_root }}/html"
+    state: absent
