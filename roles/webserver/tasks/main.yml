@@ -22,7 +22,7 @@
   become: true
   command: bash -lc "cp -r {{ doc_root }}/html/ /var/www/ || true"
   args:
-    warn: false
+    removes: /var/www/html/html
 
 - name: start and enable httpd
   become: true
