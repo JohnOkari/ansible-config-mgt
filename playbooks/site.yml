@@ -1,17 +1,16 @@
 ---
-# Import common tasks first (top-level import)
-- import_playbook: ../static-assignments/common.yml
-
-# Main play to include environment variables
-- name: Include dynamic variables
-  hosts: all
+- hosts: all
+  name: Include dynamic variables
+  tasks:
+    - import_playbook: ../static-assignments/common.yml
+    - include: ../dynamic-assignments/env-vars.yml
   tags:
     - always
-  tasks:
-    - include_tasks: ../dynamic-assignments/env-vars.yml
 
-# Webserver configuration
-- import_playbook: ../static-assignments/uat-webservers.yml
+- hosts: webservers
+  name: Webserver assignment
+  import_playbook: ../static-assignments/uat-webservers.yml
 
-# Load balancer configuration
-- import_playbook: ../static-assignments/loadbalancers.yml
+- hosts: lb
+  name: Loadbalancers assignment
+  import_playbook: ../static-assignments/loadbalancers.yml
