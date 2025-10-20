@@ -1,16 +1,13 @@
 ---
-- hosts: all
-  name: Include dynamic variables
-  tasks:
-    - import_playbook: ../static-assignments/common.yml
-    - include: ../dynamic-assignments/env-vars.yml
-  tags:
-    - always
+- name: Load common configuration
+  import_playbook: ../static-assignments/common.yml
 
-- hosts: webservers
-  name: Webserver assignment
+- name: Load environment variables
+  import_playbook: ../dynamic-assignments/env-vars.yml
+
+- name: Include UAT specific playbook
   import_playbook: ../static-assignments/uat-webservers.yml
+  when: env == "uat"
 
-- hosts: lb
-  name: Loadbalancers assignment
+- name: Include Load balancer playbook
   import_playbook: ../static-assignments/loadbalancers.yml
