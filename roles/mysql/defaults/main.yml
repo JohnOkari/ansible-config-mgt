@@ -1,0 +1,9 @@
+# env-vars/uat.yml
+mysql_root_password: "root"
+mysql_databases:
+  - name: tooling_db
+mysql_users:
+  - name: tooling
+    host: "%"
+    password: "tooling_pass"
+    priv: "tooling_db.*:ALL"

@@ -1,0 +1,9 @@
+# env-vars/uat.yml
+# variables specific to UAT
+enable_nginx_lb: true
+enable_apache_lb: false
+load_balancer_is_required: true
+mysql_root_password: root
+mysql_database: tooling_db
+mysql_user: tooling
+mysql_password: tooling_pass
