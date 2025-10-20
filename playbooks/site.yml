@@ -11,7 +11,7 @@
     - include_tasks: ../dynamic-assignments/env-vars.yml
 
 # Webserver configuration
-- import_playbook: ../static-assignments/webservers.yml
+- import_playbook: ../static-assignments/uat-webservers.yml
 
 # Load balancer configuration
 - import_playbook: ../static-assignments/loadbalancers.yml
