@@ -17,5 +17,12 @@
         }
       }
     }
+    stage('Test') {
+      steps {
+        script {
+          sh 'echo "Testing Package"'
+        }
+      }
+    }
     }
 }
